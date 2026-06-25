@@ -43,20 +43,14 @@ This skill pack systematizes "perceptual expansion" — giving AI Agents structu
 ### Install
 
 ```bash
-# Place the skill in your agents/skills directory
-cp -r WhatsGoingOn-ForLinux.skill ~/.agents/skills/whats-going-on/
+cp -r WhatsGoingOn.skill ~/.agents/skills/whats-going-on/
 ```
 
 ### CLI Usage
 
 ```bash
-# List all available senses
 python scripts/whatsgoingon.py list
-
-# Quick status snapshot (all senses)
 python scripts/whatsgoingon.py quick
-
-# Query a specific sense
 python scripts/whatsgoingon.py sense time
 python scripts/whatsgoingon.py sense system
 python scripts/whatsgoingon.py sense battery
@@ -66,59 +60,28 @@ python scripts/whatsgoingon.py sense battery
 
 ```python
 from scripts.sense_registry import SenseRegistry
-
 registry = SenseRegistry()
-
-# Get all senses
 senses = registry.list_senses()
-
-# Run a specific sense
 result = registry.run_sense("time")
-
-# Quick snapshot of everything
 snapshot = registry.quick_snapshot()
 ```
 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                  whatsgoingon.py                     │
-│              (CLI entry point)                       │
-└─────────────────────┬───────────────────────────────┘
-                      │
-┌─────────────────────▼───────────────────────────────┐
-│               SenseRegistry                         │
-│  • Module discovery & loading                        │
-│  • Result aggregation                               │
-│  • Error handling                                   │
-└─────────────────────┬───────────────────────────────┘
-                      │
-    ┌─────────────────┼─────────────────┐
-    │                 │                 │
-┌───▼────┐      ┌────▼────┐    ┌─────▼─────┐
-│time_sense│  │weather_sense││system_sense│
-└────────┘      └──────────┘    └───────────┘
-    │                 │                 │
-┌───▼────┐      ┌────▼────┐    ┌─────▼─────┐
-│network_sense││location_sense││battery_sense│
-└────────┘      └──────────┘    └───────────┘
+whatsgoingon.py (CLI)
+    → SenseRegistry
+        → time_sense / weather_sense / system_sense
+        → network_sense / location_sense / battery_sense
 ```
 
 ## Creating Custom Senses
 
 ```python
-# scripts/senses/my_sense.py
 from scripts.sense_registry import BaseSense
-
 class MySense(BaseSense):
     def sense(self, **kwargs):
-        return {
-            "sense_type": "my_sense",
-            "data": "your perception here"
-        }
-
-# Register it
+        return {"sense_type": "my_sense", "data": "your perception here"}
 registry.register("my_sense", MySense())
 ```
 
