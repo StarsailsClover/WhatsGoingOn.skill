@@ -129,6 +129,7 @@ def _print_sense_human(sense_name: str, data: dict):
         "time": "🕐",
         "weather": "🌤️",
         "system_info": "💻",
+        "storage": "💾",
         "cpu": "⚙️",
         "memory": "🧠",
         "disk": "💾",
@@ -180,11 +181,32 @@ def _print_sense_human(sense_name: str, data: dict):
         print(f"   ✅ 可用: {data.get('available_human', '?')}")
         print(f"   📈 已用: {data.get('used_human', '?')} ({data.get('usage_percent', '?')}%)")
     
-    elif sense_type == "disk":
+    elif sense_type == "disk" or sense_type == "storage":
         print(f"   💿 路径: {data.get('path', '?')}")
         print(f"   📦 总量: {data.get('total_human', '?')}")
         print(f"   ✅ 可用: {data.get('available_human', '?')}")
         print(f"   📈 已用: {data.get('used_human', '?')} ({data.get('usage_percent', '?')}%)")
+
+    elif sense_type == "cpu":
+        print(f"   🧮 逻辑核心: {data.get('cpu_count_logical', '?')}")
+        if data.get("cpu_count_physical"):
+            print(f"   🔩 物理核心: {data.get('cpu_count_physical', '?')}")
+        if data.get("cpu_model"):
+            print(f"   📋 型号: {data.get('cpu_model', '?')}")
+        if data.get("cpu_frequency_ghz"):
+            print(f"   ⚡ 频率: {data.get('cpu_frequency_ghz', '?')} GHz")
+        if data.get("load_average"):
+            load = data["load_average"]
+            print(f"   📊 负载: {load['1min']} / {load['5min']} / {load['15min']} (1/5/15min)")
+        if data.get("usage_percent") is not None:
+            print(f"   ⚡ 使用率: {data['usage_percent']}%")
+
+    elif sense_type == "memory":
+        print(f"   💾 总量: {data.get('total_human', '?')}")
+        print(f"   ✅ 可用: {data.get('available_human', '?')}")
+        print(f"   📈 已用: {data.get('used_human', '?')} ({data.get('usage_percent', '?')}%)")
+        if data.get("swap_total") and data["swap_total"] > 0:
+            print(f"   🔄 交换: {_format_bytes(data['swap_used'])} / {_format_bytes(data['swap_total'])} ({data.get('swap_usage_percent', '?')}%)")
     
     elif sense_type == "battery":
         if not data.get("has_battery"):
@@ -272,7 +294,7 @@ def main():
     # quick 命令
     quick_parser = subparsers.add_parser("quick", help="快速获取感知信息")
     quick_parser.add_argument("-t", "--type", default="status",
-                             choices=["all", "environment", "system", "status"],
+                             choices=["all", "environment", "system", "status", "storage", "cpu", "memory"],
                              help="感知类型 (默认: status)")
     quick_parser.add_argument("-j", "--json", action="store_true", help="JSON 格式输出")
     quick_parser.set_defaults(func=quick_sense)

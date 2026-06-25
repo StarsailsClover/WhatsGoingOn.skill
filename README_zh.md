@@ -29,6 +29,9 @@ python scripts/whatsgoingon.py quick
 | time | 当前时间、倒计时、日历 |
 | weather | 实时天气和预报 |
 | system | CPU、内存、磁盘、进程、运行时间 |
+| cpu | CPU 使用率、核心数、频率、负载 |
+| memory | 内存总量、已用、可用、交换空间 |
+| storage | 磁盘总量、已用、可用、使用率 |
 | network | 网络接口、公网 IP、连接状态、延迟 |
 | location | 基于 IP 的地理位置 |
 | battery | 电量、充电状态、健康度 |

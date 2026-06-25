@@ -36,7 +36,10 @@ description: WGO | 我感受到了？给 AI Agent 提供多维度感知能力的
 3. **系统感知** (`system_sense`) — CPU、内存、磁盘、进程、运行时间
 4. **网络感知** (`network_sense`) — 网络接口、公网 IP、连接状态、延迟
 5. **位置感知** (`location_sense`) — 基于 IP 的地理位置、时区
-6. **电池感知** (`battery_sense`) — 电量、充电状态、健康度、剩余时间
+6. **CPU 感知** (`cpu_sense`) — CPU 使用率、核心数、频率、负载
+7. **内存感知** (`memory_sense`) — 内存总量、已用、可用、交换空间
+8. **存储感知** (`storage_sense`) — 磁盘总量、已用、可用、使用率
+9. **电池感知** (`battery_sense`) — 电量、充电状态、健康度、剩余时间
 
 ### 扩展性
 
@@ -58,7 +61,9 @@ cp -r WhatsGoingOn.skill ~/.agents/skills/whats-going-on/
 python scripts/whatsgoingon.py list
 python scripts/whatsgoingon.py quick
 python scripts/whatsgoingon.py sense time
-python scripts/whatsgoingon.py sense system
+python scripts/whatsgoingon.py sense cpu
+python scripts/whatsgoingon.py sense memory
+python scripts/whatsgoingon.py sense storage
 python scripts/whatsgoingon.py sense battery
 ```
 
@@ -79,6 +84,9 @@ snapshot = registry.quick_snapshot()
 | 时间 | ✅ | ✅ | ✅ |
 | 天气 | ✅ | ✅ | ✅ |
 | 系统 | `/proc`, `ps` | `sysctl`, `vm_stat` | WMI, PowerShell |
+| CPU | `/proc/stat` | `sysctl`, `top` | WMI, PowerShell |
+| 内存 | `/proc/meminfo` | `sysctl`, `vm_stat` | WMI, PowerShell |
+| 存储 | `df` | `df` | WMI, ctypes |
 | 网络 | `ip`, `resolv.conf` | `ifconfig`, `scutil` | `ipconfig` |
 | 位置 | ✅ | ✅ | ✅ |
 | 电池 | `sysfs`, `upower`, `acpi` | `pmset`, `ioreg` | WMI, PowerShell |

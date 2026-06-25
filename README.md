@@ -31,6 +31,9 @@ python scripts/whatsgoingon.py quick
 | time | Current time, timers, calendar |
 | weather | Real-time weather and forecasts |
 | system | CPU, memory, disk, processes, uptime |
+| cpu | CPU usage, cores, frequency, load average |
+| memory | RAM total, used, available, swap |
+| storage | Disk total, used, available, usage % |
 | network | Interfaces, public IP, connectivity, latency |
 | location | IP-based geolocation |
 | battery | Level, charging status, health |

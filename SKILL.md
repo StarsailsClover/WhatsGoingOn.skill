@@ -28,9 +28,12 @@ This skill pack systematizes "perceptual expansion" — giving AI Agents structu
 1. **Time Sense** (`time_sense`) — Current time, time differences, countdown timers, calendar info
 2. **Weather Sense** (`weather_sense`) — Real-time weather, forecasts, astronomical data
 3. **System Sense** (`system_sense`) — CPU, memory, disk, processes, uptime
-4. **Network Sense** (`network_sense`) — Network interfaces, public IP, connectivity, latency
-5. **Location Sense** (`location_sense`) — IP-based geolocation, timezone
-6. **Battery Sense** (`battery_sense`) — Battery level, charging status, health, remaining time
+4. **CPU Sense** (`cpu_sense`) — CPU usage, cores, frequency, load average
+5. **Memory Sense** (`memory_sense`) — RAM total, used, available, swap
+6. **Storage Sense** (`storage_sense`) — Disk total, used, available, usage percentage
+7. **Network Sense** (`network_sense`) — Network interfaces, public IP, connectivity, latency
+8. **Location Sense** (`location_sense`) — IP-based geolocation, timezone
+9. **Battery Sense** (`battery_sense`) — Battery level, charging status, health, remaining time
 
 ### Extensibility
 
@@ -72,6 +75,7 @@ snapshot = registry.quick_snapshot()
 whatsgoingon.py (CLI)
     → SenseRegistry
         → time_sense / weather_sense / system_sense
+        → cpu_sense / memory_sense / storage_sense
         → network_sense / location_sense / battery_sense
 ```
 
@@ -84,17 +88,6 @@ class MySense(BaseSense):
         return {"sense_type": "my_sense", "data": "your perception here"}
 registry.register("my_sense", MySense())
 ```
-
-## Cross-Platform Notes
-
-| Sense | Linux | macOS | Windows |
-|-------|-------|-------|---------|
-| Time | ✅ | ✅ | ✅ |
-| Weather | ✅ | ✅ | ✅ |
-| System | `/proc`, `ps` | `sysctl`, `vm_stat` | WMI, PowerShell |
-| Network | `ip`, `resolv.conf` | `ifconfig`, `scutil` | `ipconfig` |
-| Location | ✅ | ✅ | ✅ |
-| Battery | `sysfs`, `upower`, `acpi` | `pmset`, `ioreg` | WMI, PowerShell |
 
 ## License
 

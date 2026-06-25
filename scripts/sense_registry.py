@@ -270,20 +270,36 @@ class SenseRegistry:
             "environment": [
                 "time_sense.get_current_time",
                 "weather_sense.get_weather",
-                "location_sense.get_location_by_ip"
+                "location_sense.get_location_by_ip",
+                "storage_sense.get_disk_usage",
+                "cpu_sense.get_cpu_info",
+                "memory_sense.get_memory_info"
             ],
             "system": [
                 "system_sense.get_cpu_info",
                 "system_sense.get_memory_info",
                 "system_sense.get_disk_info",
+                "storage_sense.get_disk_usage",
+                "cpu_sense.get_cpu_info",
+                "memory_sense.get_memory_info",
                 "network_sense.check_connectivity"
             ],
             "status": [
                 "time_sense.get_current_time",
-                "system_sense.get_cpu_info",
-                "system_sense.get_memory_info",
+                "cpu_sense.get_cpu_info",
+                "memory_sense.get_memory_info",
+                "storage_sense.get_disk_usage",
                 "battery_sense.get_battery_info",
                 "network_sense.check_connectivity"
+            ],
+            "storage": [
+                "storage_sense.get_disk_usage"
+            ],
+            "cpu": [
+                "cpu_sense.get_cpu_info"
+            ],
+            "memory": [
+                "memory_sense.get_memory_info"
             ]
         }
         
